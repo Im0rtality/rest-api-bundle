@@ -1,0 +1,3 @@
+im0rtality_api:
+    resource: "@Im0rtalityApiBundle/Resources/config/routing.yml"
+    prefix:   /api

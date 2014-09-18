@@ -1,0 +1,18 @@
+default:
+    extensions:
+        Behat\Symfony2Extension:
+            kernel:
+                env: test
+                debug: false
+
+        VIPSoft\DoctrineDataFixturesExtension\Extension:
+            lifetime:    feature
+            autoload:    true
+    suites:
+        AcmeDemoBundle:
+            type: symfony_bundle
+            use_backup: false
+#            paths:
+#                - %paths.base%/src/Nfq/Fairytale/ApiBundle/Features
+#            contexts:
+#                - Nfq\Fairytale\ApiBundle\Features\Context\FeatureContext

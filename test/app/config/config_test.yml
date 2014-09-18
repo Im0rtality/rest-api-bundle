@@ -1,0 +1,18 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    profiler:
+        collect: false
+
+#nfq_fairytale_api:
+#    acl: api_acl_test.yml
+#    mapping:
+#        user: Acme\DemoBundle\Entity\User
+#    ownership:
+#        "Acme\DemoBundle\Entity\User": id
+
+doctrine:
+    dbal:
+        dbname:   "%database_name%_test"
