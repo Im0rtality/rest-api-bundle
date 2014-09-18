@@ -19,7 +19,7 @@ class Im0rtalityApiExtension extends Extension
 {
     public function getAlias()
     {
-        return 'api_bundle_api';
+        return 'im0rtality_api';
     }
 
     /**
