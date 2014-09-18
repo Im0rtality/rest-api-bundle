@@ -1,0 +1,30 @@
+services:
+    api_bundle.action.collection.count:
+        class: Im0rtality\ApiBundle\Actions\Collection\CountAction
+        tags:
+            - { name: api_bundle.api.action.collection, resource: '*', action: count, method: GET }
+
+    api_bundle.api.action.instance.read:
+        class: Im0rtality\ApiBundle\Actions\Instance\ReadAction
+        tags:
+            - { name: api_bundle.api.action.instance, resource: '*', method: GET }
+
+    api_bundle.api.action.instance.delete:
+        class: Im0rtality\ApiBundle\Actions\Instance\DeleteAction
+        tags:
+            - { name: api_bundle.api.action.instance, resource: '*', method: DELETE }
+
+    api_bundle.api.action.instance.update:
+        class: Im0rtality\ApiBundle\Actions\Instance\UpdateAction
+        tags:
+            - { name: api_bundle.api.action.instance, resource: '*', method: PUT }
+
+    api_bundle.api.action.collection.create:
+        class: Im0rtality\ApiBundle\Actions\Collection\CreateAction
+        tags:
+            - { name: api_bundle.api.action.collection, resource: '*', method: POST }
+
+    api_bundle.api.action.collection.index:
+        class: Im0rtality\ApiBundle\Actions\Collection\IndexAction
+        tags:
+            - { name: api_bundle.api.action.collection, resource: '*', method: GET }

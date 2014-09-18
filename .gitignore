@@ -1,0 +1,14 @@
+.idea/
+
+/bin/
+/vendor/
+composer.lock
+
+/test/app/cache
+!/test/app/cache/.gitkeep
+/test/app/logs
+!/test/app/logs/.gitkeep
+/test/app/database.db
+/test/bin/
+/test/vendor/
+
