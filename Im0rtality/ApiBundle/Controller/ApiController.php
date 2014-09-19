@@ -36,17 +36,17 @@ class ApiController extends Controller implements ApiControllerInterface
         );
 
         /** @var RequestValidator $requestValidator */
-        $requestValidator = $this->container->get('api_bundle.api.security.request_validator');
+        $requestValidator = $this->container->get('im0rtality_api.api.security.request_validator');
         $requestValidator->validate($resource, $action->getName(), $payload, $roles);
 
         /** @var DataSourceFactory $factory */
-        $factory = $this->container->get('api_bundle.data_source.factory');
+        $factory = $this->container->get('im0rtality_api.data_source.factory');
 
         $roles = $this->handleObjectOwnership($resource, $identifier, $factory, $token, $roles);
         $result = $this->execute($request, $resource, $action, $identifier, $factory);
 
         /** @var ResponseFilter $responseFilter */
-        $responseFilter = $this->container->get('api_bundle.api.security.response_filter');
+        $responseFilter = $this->container->get('im0rtality_api.api.security.response_filter');
 
         return new Response(
             $this->renderView(
@@ -108,7 +108,7 @@ class ApiController extends Controller implements ApiControllerInterface
     {
         if ($identifier) {
             /** @var OwnershipResolver $ownershipResolver */
-            $ownershipResolver = $this->container->get('api_bundle.api.security.ownership_resolver');
+            $ownershipResolver = $this->container->get('im0rtality_api.api.security.ownership_resolver');
 
             $instance = $factory->create($resource)->read($identifier);
             $isOwner = $ownershipResolver->resolve($token->getUser()->getId(), $instance);

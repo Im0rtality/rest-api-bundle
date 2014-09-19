@@ -18,15 +18,15 @@ class ActionPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $collectionActions = $container->findTaggedServiceIds('api_bundle.api.action.collection');
-        $instanceActions = $container->findTaggedServiceIds('api_bundle.api.action.instance');
+        $collectionActions = $container->findTaggedServiceIds('im0rtality_api.api.action.collection');
+        $instanceActions = $container->findTaggedServiceIds('im0rtality_api.api.action.instance');
 
-        $actionManager = $container->getDefinition('api_bundle.action.manager');
+        $actionManager = $container->getDefinition('im0rtality_api.action.manager');
 
         $this->addActions($container, $collectionActions, $actionManager, 'addCollectionAction');
         $this->addActions($container, $instanceActions, $actionManager, 'addInstanceAction');
 
-        $container->setDefinition('api_bundle.action.manager', $actionManager);
+        $container->setDefinition('im0rtality_api.action.manager', $actionManager);
     }
 
     /**

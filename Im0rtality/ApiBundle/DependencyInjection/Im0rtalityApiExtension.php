@@ -48,11 +48,11 @@ class Im0rtalityApiExtension extends Extension
         );
         $container->setParameter('api_bundle_api.config.security.acl', $acl);
 
-        $factory = $container->getDefinition('api_bundle.data_source.factory');
+        $factory = $container->getDefinition('im0rtality_api.data_source.factory');
 
         switch ($config['data']['type']) {
             case 'orm':
-                $dataSource = $container->getDefinition('api_bundle.data_source.orm');
+                $dataSource = $container->getDefinition('im0rtality_api.data_source.orm');
                 $dataSource->addMethodCall('setManagerName', [$config['data']['source']]);
                 break;
             default:
@@ -61,6 +61,6 @@ class Im0rtalityApiExtension extends Extension
 
         $factory->addMethodCall('setDataSource', [$dataSource]);
 
-        $container->setDefinition('api_bundle.data_source.factory', $factory);
+        $container->setDefinition('im0rtality_api.data_source.factory', $factory);
     }
 }

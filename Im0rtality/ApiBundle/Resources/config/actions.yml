@@ -1,30 +1,30 @@
 services:
-    api_bundle.action.collection.count:
+    im0rtality_api.action.collection.count:
         class: Im0rtality\ApiBundle\Actions\Collection\CountAction
         tags:
-            - { name: api_bundle.api.action.collection, resource: '*', action: count, method: GET }
+            - { name: im0rtality_api.api.action.collection, resource: '*', action: count, method: GET }
 
-    api_bundle.api.action.instance.read:
+    im0rtality_api.api.action.instance.read:
         class: Im0rtality\ApiBundle\Actions\Instance\ReadAction
         tags:
-            - { name: api_bundle.api.action.instance, resource: '*', method: GET }
+            - { name: im0rtality_api.api.action.instance, resource: '*', method: GET }
 
-    api_bundle.api.action.instance.delete:
+    im0rtality_api.api.action.instance.delete:
         class: Im0rtality\ApiBundle\Actions\Instance\DeleteAction
         tags:
-            - { name: api_bundle.api.action.instance, resource: '*', method: DELETE }
+            - { name: im0rtality_api.api.action.instance, resource: '*', method: DELETE }
 
-    api_bundle.api.action.instance.update:
+    im0rtality_api.api.action.instance.update:
         class: Im0rtality\ApiBundle\Actions\Instance\UpdateAction
         tags:
-            - { name: api_bundle.api.action.instance, resource: '*', method: PUT }
+            - { name: im0rtality_api.api.action.instance, resource: '*', method: PUT }
 
-    api_bundle.api.action.collection.create:
+    im0rtality_api.api.action.collection.create:
         class: Im0rtality\ApiBundle\Actions\Collection\CreateAction
         tags:
-            - { name: api_bundle.api.action.collection, resource: '*', method: POST }
+            - { name: im0rtality_api.api.action.collection, resource: '*', method: POST }
 
-    api_bundle.api.action.collection.index:
+    im0rtality_api.api.action.collection.index:
         class: Im0rtality\ApiBundle\Actions\Collection\IndexAction
         tags:
-            - { name: api_bundle.api.action.collection, resource: '*', method: GET }
+            - { name: im0rtality_api.api.action.collection, resource: '*', method: GET }

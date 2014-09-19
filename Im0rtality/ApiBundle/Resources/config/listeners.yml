@@ -1,5 +1,5 @@
 services:
-    api_bundle.api.listener.logging:
+    im0rtality_api.api.listener.logging:
         class: Im0rtality\ApiBundle\EventListener\LoggingListener
         calls:
             - [setContext, [@security.context]]
@@ -8,11 +8,11 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
             - { name: monolog.logger, channel: api }
 
-    api_bundle.api.listener.auth:
+    im0rtality_api.api.listener.auth:
         class: Im0rtality\ApiBundle\EventListener\AuthorizationListener
         calls:
-            - [setResourceResolver, [@api_bundle.api.resource_resolver]]
-            - [setActionResolver, [@api_bundle.action.manager]]
+            - [setResourceResolver, [@im0rtality_api.api.resource_resolver]]
+            - [setActionResolver, [@im0rtality_api.action.manager]]
             - [setSerializer, [@jms_serializer]]
         tags:
             - { name: kernel.event_subscriber }

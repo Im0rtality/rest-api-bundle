@@ -1,43 +1,43 @@
 parameters:
 
 services:
-    api_bundle.data_source.doctrine.orm.class_factory:
+    im0rtality_api.data_source.doctrine.orm.class_factory:
         class: Im0rtality\ApiBundle\DataSource\ClassFactory
 
-    api_bundle.data_source.orm:
+    im0rtality_api.data_source.orm:
         class: Im0rtality\ApiBundle\DataSource\DoctrineOrmSource
         calls:
-            - [setClassFactory, [@api_bundle.data_source.doctrine.orm.class_factory]]
+            - [setClassFactory, [@im0rtality_api.data_source.doctrine.orm.class_factory]]
             - [setRegistry, [@doctrine]]
 
-    api_bundle.data_source.factory:
+    im0rtality_api.data_source.factory:
         class: Im0rtality\ApiBundle\DataSource\Factory\DataSourceFactory
 
-    api_bundle.action.manager:
+    im0rtality_api.action.manager:
         class: Im0rtality\ApiBundle\Actions\ActionManager
 
-    api_bundle.api.resource_resolver:
+    im0rtality_api.api.resource_resolver:
         class: Im0rtality\ApiBundle\Helper\ResourceResolver
         calls:
-            - [setResourceMapping, [%api_bundle_api.config.mapping%]]
+            - [setResourceMapping, [%im0rtality_api.config.mapping%]]
 
-    api_bundle.api.security.permissions:
+    im0rtality_api.api.security.permissions:
         class: Im0rtality\ApiBundle\Security\PermissionManager
         calls:
             - [setAcl, [%api_bundle_api.config.security.acl%]]
 
-    api_bundle.api.security.request_validator:
+    im0rtality_api.api.security.request_validator:
         class: Im0rtality\ApiBundle\Helper\RequestValidator
         calls:
-            - [setPermissions, [@api_bundle.api.security.permissions]]
+            - [setPermissions, [@im0rtality_api.api.security.permissions]]
 
-    api_bundle.api.security.response_filter:
+    im0rtality_api.api.security.response_filter:
         class: Im0rtality\ApiBundle\Helper\ResponseFilter
         calls:
-            - [setPermissions, [@api_bundle.api.security.permissions]]
+            - [setPermissions, [@im0rtality_api.api.security.permissions]]
             - [setSerializer, [@jms_serializer]]
 
-    api_bundle.api.security.ownership_resolver:
+    im0rtality_api.api.security.ownership_resolver:
         class: Im0rtality\ApiBundle\Helper\OwnershipResolver
         calls:
-            - [setOwnerships, [%api_bundle_api.config.ownership%]]
+            - [setOwnerships, [%im0rtality_api.config.ownership%]]
