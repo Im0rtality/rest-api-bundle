@@ -11,11 +11,11 @@ This bundle is a RESTful API building tool making process as fast as possible. F
 
 # Installation
 
-## 1. Install via Composer
+### 1. Install via Composer
 
     $ composer require "im0rtality/rest-api-bundle:dev-master"
 
-## 2. Activate it
+### 2. Activate it
 
 Enable bundle in kernel:
 
@@ -38,7 +38,7 @@ public function registerBundles()
 
 ```
 
-## 3. Register routes
+### 3. Register routes
 
 Add following to your routing configuration:
 
@@ -49,7 +49,11 @@ im0rtality_api:
 
 ```
 
-## 4. Disable security for API route
+### 4. Configure FOSUserBundle's security
+
+Described in details https://github.com/FriendsOfSymfony/FOSUserBundle/blob/1.3.x/Resources/doc/index.md#step-4-configure-your-applications-securityyml
+
+### 5. Disable security for API route
 
 Add following to your security configuration:
 
