@@ -19,7 +19,9 @@ class IndexAction extends BaseCollectionAction
             200,
             $resource->index(
                 $request->query->get('limit'),
-                $request->query->get('offset')
+                $request->query->get('offset'),
+                $request->query->get('orderBy'),
+                $request->query->get('order')
             )
         );
     }

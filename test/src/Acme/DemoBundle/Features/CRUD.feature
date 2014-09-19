@@ -32,6 +32,21 @@ Feature: CRUD
         ]
         """
 
+    Scenario: I can sort when doing index query
+        Given I am authenticated as "admin"
+        When I send a GET request to "/api/user?limit=1&offset=9&orderBy=id&order=DESC"
+        Then the response code should be 200
+        And the response should be json:
+        """
+        [
+            {
+                "id":   2,
+                "email": "user@user.com",
+                "name": "The User"
+            }
+        ]
+        """
+
     Scenario: I can create user
         Given I am authenticated as "admin"
         When I send a POST request to "/api/user" with body:
