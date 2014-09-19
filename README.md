@@ -83,11 +83,11 @@ Example configuration:
 im0rtality_api:
     acl: api_acl.yml
     mapping:
-        user: Acme\DemoBundle\Entity\User
+        user: 'Acme\DemoBundle\Entity\User'
     data:
         type: orm
     ownership:
-        "Acme\DemoBundle\Entity\User": id
+        'Acme\DemoBundle\Entity\User': id
 ```
 
 -----------
@@ -97,3 +97,17 @@ acl | Relative file path which contains ACL configuration stored in YAML format
 mapping | Aliases to your entity used in URL
 data.type | Data source (right now only `orm` is supported)
 ownership | Entity class name and field linking given entity to it's "owner" user
+
+# Testing
+
+Most of code is covered with [PHPSpec](https://github.com/phpspec/phpspec) internally and other part is coverted externaly with [Behat](). To run tests you need to execute following:
+
+```bash
+# install vendors
+$ composer install
+$ cd test; composer install
+
+# run the tests
+$ bin/phpspec run
+$ cd test; bin/behat
+```
