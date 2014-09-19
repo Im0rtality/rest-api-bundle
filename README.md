@@ -86,8 +86,10 @@ im0rtality_api:
         "Acme\DemoBundle\Entity\User": id
 ```
 
--------------------------
-acl | relative file path which contains ACL configuration stored in YAML format
-mapping | aliases to your entity used in URL
-data.type | datasource (right now only `orm` is supported)
-ownership | entity class name and field linking given entity to it's "owner" user
+-----------
+key | description
+----|------
+acl | Relative file path which contains ACL configuration stored in YAML format
+mapping | Aliases to your entity used in URL
+data.type | Data source (right now only `orm` is supported)
+ownership | Entity class name and field linking given entity to it's "owner" user
