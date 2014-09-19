@@ -14,6 +14,7 @@ matrix:
 before_install:
     # to avoid Github API rate limiting (scope - repo:status)
     - composer config -g github-oauth.github.com 4a5d830c53e21564d03c452c7624cad41a1d49bc
+    - echo TRAVIS_TAG;
 
 install:
     - composer install -n --prefer-dist
