@@ -1,4 +1,4 @@
-api_bundle_api.resource.instance.action:
+im0rtality_api.resource.instance.action:
     path:     /{resource}/{identifier}/{actionName}
     defaults:
         _controller: Im0rtalityApiBundle:Api:custom
@@ -6,7 +6,7 @@ api_bundle_api.resource.instance.action:
     requirements:
         identifier: \d+
 
-api_bundle_api.resource.instance.action.empty_action:
+im0rtality_api.resource.instance.action.empty_action:
     path:     /{resource}/{identifier}
     defaults:
         _controller: Im0rtalityApiBundle:Api:custom
@@ -15,14 +15,14 @@ api_bundle_api.resource.instance.action.empty_action:
     requirements:
         identifier: \d+
 
-api_bundle_api.resource.collection.action:
+im0rtality_api.resource.collection.action:
     path:     /{resource}/{actionName}
     defaults:
         _controller: Im0rtalityApiBundle:Api:custom
         _format: json
     methods: [GET, POST, PUT, DELETE, HEAD]
 
-api_bundle_api.resource.collection.action.empty_action:
+im0rtality_api.resource.collection.action.empty_action:
     path:     /{resource}
     defaults:
         _controller: Im0rtalityApiBundle:Api:custom

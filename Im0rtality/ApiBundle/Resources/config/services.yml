@@ -24,7 +24,7 @@ services:
     im0rtality_api.api.security.permissions:
         class: Im0rtality\ApiBundle\Security\PermissionManager
         calls:
-            - [setAcl, [%api_bundle_api.config.security.acl%]]
+            - [setAcl, [%im0rtality_api.config.security.acl%]]
 
     im0rtality_api.api.security.request_validator:
         class: Im0rtality\ApiBundle\Helper\RequestValidator

@@ -38,9 +38,9 @@ class Im0rtalityApiExtension extends Extension
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('api_bundle_api.config.mapping', $config['mapping']);
-        $container->setParameter('api_bundle_api.config.ownership', $config['ownership']);
-        $container->setParameter('api_bundle_api.config.default_index_size', $config['index_size']);
+        $container->setParameter('im0rtality_api.config.mapping', $config['mapping']);
+        $container->setParameter('im0rtality_api.config.ownership', $config['ownership']);
+        $container->setParameter('im0rtality_api.config.default_index_size', $config['index_size']);
 
         /* ACL */
         $acl = Yaml::parse(
