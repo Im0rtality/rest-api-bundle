@@ -46,7 +46,7 @@ class Im0rtalityApiExtension extends Extension
         $acl = Yaml::parse(
             file_get_contents($container->getParameter('kernel.root_dir') . '/config/' . $config['acl'])
         );
-        $container->setParameter('api_bundle_api.config.security.acl', $acl);
+        $container->setParameter('im0rtality_api.config.security.acl', $acl);
 
         $factory = $container->getDefinition('im0rtality_api.data_source.factory');
 
