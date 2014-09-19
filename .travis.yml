@@ -14,10 +14,13 @@ matrix:
 before_install:
     # to avoid Github API rate limiting (scope - repo:status)
     - composer config -g github-oauth.github.com 4a5d830c53e21564d03c452c7624cad41a1d49bc
+    - if [ "$TRAVIS_TAG" = "" ]; then LOCAL_VER="dev-master"; else LOCAL_VER="$TRAVIS_TAG-dev"; fi
+    - export LOCAL_VER="$LOCAL_VER"
+    - printenv LOCAL_VER
 
 install:
     - composer install -n --prefer-dist
-    - cd test; composer install -n --prefer-dist
+    - cd test; composer require "im0rtality/rest-api-bundle:$LOCAL_VER" -n --prefer-dist
 
 script:
     - bin/phpspec run -v -fpretty
