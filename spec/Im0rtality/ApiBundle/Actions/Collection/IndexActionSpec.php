@@ -21,7 +21,7 @@ class IndexActionSpec extends ObjectBehavior
     function it_should_index_via_dataSource(DataSourceInterface $dataSource)
     {
         $request = new Request(['limit' => 1, 'offset' => 1]);
-        $dataSource->index(1, 1)->willReturn([]);
+        $dataSource->index(1, 1, null, null)->willReturn([]);
 
         $result = $this->execute($request, $dataSource);
 

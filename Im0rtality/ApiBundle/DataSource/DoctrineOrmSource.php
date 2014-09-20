@@ -3,6 +3,7 @@
 namespace Im0rtality\ApiBundle\DataSource;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 
 class DoctrineOrmSource implements DataSourceInterface
@@ -172,5 +173,15 @@ class DoctrineOrmSource implements DataSourceInterface
             throw new \InvalidArgumentException('DoctrineOrmSource only supports ORM EntityManager as $manager');
         }
         return $manager;
+    }
+
+    /**
+     * Returns underlying driver so you can do "things" at price of sacrificing abstraction
+     *
+     * @return EntityManager
+     */
+    public function getDriver()
+    {
+        return $this->getManager();
     }
 }

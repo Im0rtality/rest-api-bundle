@@ -76,4 +76,11 @@ interface DataSourceInterface
      * @return string
      */
     public function getResource();
+
+    /**
+     * Returns underlying driver so you can do "things" at price of sacrificing abstraction
+     *
+     * @return mixed
+     */
+    public function getDriver();
 }
