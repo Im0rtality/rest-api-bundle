@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\UnitOfWork;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class DoctrineOrmSource implements DataSourceInterface
 {
@@ -60,8 +61,9 @@ class DoctrineOrmSource implements DataSourceInterface
      */
     public function update($identifier, $patch)
     {
-        $object = $this->populate(array_replace($patch, ['id' => $identifier]));
+        $object = $this->read($identifier);
 
+        $this->hydrate($patch, $object);
         $this->persist($object);
 
         return $object;
@@ -87,7 +89,10 @@ class DoctrineOrmSource implements DataSourceInterface
     {
         $data['id'] = null;
 
-        $object = $this->populate($data);
+        $object = $this->classFactory->create($this->resource);
+
+        $this->hydrate($data, $object);
+
         $this->persist($object, $data);
 
         return $object;
@@ -103,10 +108,7 @@ class DoctrineOrmSource implements DataSourceInterface
     }
 
     /**
-     * Returns elements that matches the query
-     *
-     * @param mixed $query
-     * @return array
+     * @inheritdoc
      */
     public function query($query)
     {
@@ -137,7 +139,6 @@ class DoctrineOrmSource implements DataSourceInterface
 
     /**
      * @param $object
-     * @param $data
      */
     private function persist($object)
     {
@@ -170,13 +171,27 @@ class DoctrineOrmSource implements DataSourceInterface
     }
 
     /**
-     * @param $data
-     * @return object
+     * Populates given $object with $data.
+     *
+     * @param array  $data
+     * @param object $object
      */
-    private function populate($data)
+    private function hydrate($data, $object)
     {
-        $object = $this->getManager()->getUnitOfWork()->createEntity($this->resource, $data);
-        $this->getManager()->detach($object);
-        return $object;
+        $em = $this->getManager();
+        $class = $em->getClassMetadata($this->resource);
+        $fields = $class->getFieldNames();
+        $assocFields = $class->getAssociationNames();
+
+        foreach ($data as $field => $value) {
+            if (in_array($field, $fields)) {
+                $class->setFieldValue($object, $field, $value);
+            } elseif (in_array($field, $assocFields)) {
+                $class->setFieldValue($object, $field,
+                    $em->getPartialReference($class->getAssociationTargetClass($field), $value));
+            } else {
+                throw new BadRequestHttpException(sprintf('Unsupported field %s', $field));
+            }
+        }
     }
 }

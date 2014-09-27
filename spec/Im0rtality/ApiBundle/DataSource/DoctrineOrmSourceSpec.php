@@ -7,6 +7,8 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\UnitOfWork;
 use Im0rtality\ApiBundle\DataSource\ClassFactory;
@@ -74,16 +76,21 @@ class DoctrineOrmSourceSpec extends ObjectBehavior
         EntityManager $em,
         ClassFactory $factory,
         ObjectRepository $repository,
-        UnitOfWork $uow
+        ClassMetadataInfo $class
     ) {
         $entity = (object)['foo' => null, 'bar' => null];
+
+        $class->getFieldNames()->willReturn(['id', 'foo', 'bar']);
+        $class->setFieldValue($entity, 'id', null)->shouldBeCalled();
+        $class->setFieldValue($entity, 'foo', 1)->shouldBeCalled();
+        $class->setFieldValue($entity, 'bar', 2)->shouldBeCalled();
+
+        $class->getAssociationNames()->willReturn([]);
 
         $repository->getClassName()->willReturn('foo');
         $factory->create('foo')->willReturn($entity);
         $em->getRepository('foo')->willReturn($repository);
-        $em->getUnitOfWork()->willReturn($uow);
-        $uow->createEntity('foo', ['foo' => 1, 'bar' => 2, 'id' => null])->willReturn($entity);
-        $em->detach($entity)->shouldBeCalled();
+        $em->getClassMetadata('foo')->willReturn($class);
         $em->persist($entity)->shouldBeCalled();
         $em->flush()->shouldBeCalled();
         $registry->getManager(null)->willReturn($em);
@@ -97,19 +104,28 @@ class DoctrineOrmSourceSpec extends ObjectBehavior
         $this->create(['foo' => 1, 'bar' => 2])->shouldBe($entity);
     }
 
-    function it_should_update_entity(ManagerRegistry $registry, EntityManager $em, UnitOfWork $uow)
-    {
+    function it_should_update_entity(
+        ManagerRegistry $registry,
+        EntityManager $em,
+        ObjectRepository $repo,
+        ClassMetadataInfo $class
+    ) {
         $entity = (object)['id' => 1, 'foo' => 1, 'bar' => 2];
 
-        $em->getUnitOfWork()->willReturn($uow);
-        $uow->createEntity('foo', ['foo' => 1, 'bar' => 2, 'id' => 1])->willReturn((object)['foo' => 1, 'bar' => 2, 'id' => 1]);
-        $em->detach($entity)->shouldBeCalled();
+        $class->getFieldNames()->willReturn(['id', 'foo', 'bar']);
+        $class->getAssociationNames()->willReturn([]);
+        $class->setFieldValue($entity, 'foo', 1)->shouldBeCalled();
+        $class->setFieldValue($entity, 'bar', 2)->shouldBeCalled();
+
         $em->persist($entity)->shouldBeCalled();
         $em->flush()->shouldBeCalled();
+        $em->getClassMetadata('foo')->willReturn($class);
         $registry->getManager(null)->willReturn($em);
+        $em->getRepository('foo')->willReturn($repo);
+        $repo->find(1)->willReturn($entity);
 
         $this->setRegistry($registry);
-        $this->update(1, ['foo' => 1, 'bar' => 2])->shouldBeKindaSame((object)['foo' => 1, 'bar' => 2, 'id' => 1]);
+        $this->update(1, ['foo' => 1, 'bar' => 2])->shouldBeKindaSame((object)['id' => 1, 'foo' => 1, 'bar' => 2]);
     }
 
     function it_should_perform_search_query(ManagerRegistry $registry, EntityManager $em, EntityRepository $repo)
