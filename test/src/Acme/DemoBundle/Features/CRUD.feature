@@ -93,7 +93,7 @@ Feature: CRUD
         Given I am authenticated as "admin"
         When I send a DELETE request to "/api/user/10"
         Then the response code should be 200
-        And the response should be json: 
+        And the response should be json:
         """
         {
             "status":"success"
