@@ -1,8 +1,8 @@
 {
-    "name": "nfqakademija/fairytale",
+    "name": "im0rtality/rest-api-bundle-test",
     "license": "MIT",
     "type": "project",
-    "description": "NFQ Library",
+    "description": "Test project for rest bundle",
     "autoload": {
         "psr-0": {"": "src/", "SymfonyStandard": "app/"}
     },
