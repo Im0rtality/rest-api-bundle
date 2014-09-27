@@ -5,6 +5,7 @@ namespace Im0rtality\ApiBundle\DataSource;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\UnitOfWork;
 
 class DoctrineOrmSource implements DataSourceInterface
 {
@@ -59,9 +60,9 @@ class DoctrineOrmSource implements DataSourceInterface
      */
     public function update($identifier, $patch)
     {
-        $object = $this->getManager()->getPartialReference($this->resource, $identifier);
+        $object = $this->populate(array_replace($patch, ['id' => $identifier]));
 
-        $this->populateAndPersist($object, $patch);
+        $this->persist($object);
 
         return $object;
     }
@@ -84,11 +85,10 @@ class DoctrineOrmSource implements DataSourceInterface
      */
     public function create($data)
     {
-        $object = $this->classFactory->create(
-            $this->getManager()->getRepository($this->resource)->getClassName()
-        );
+        $data['id'] = null;
 
-        $this->populateAndPersist($object, $data);
+        $object = $this->populate($data);
+        $this->persist($object, $data);
 
         return $object;
     }
@@ -139,24 +139,8 @@ class DoctrineOrmSource implements DataSourceInterface
      * @param $object
      * @param $data
      */
-    private function populateObject($object, $data)
+    private function persist($object)
     {
-        $ref = new \ReflectionObject($object);
-        foreach ($data as $key => $value) {
-            $property = $ref->getProperty($key);
-            $property->setAccessible(true);
-            $property->setValue($object, $value);
-        }
-    }
-
-    /**
-     * @param $object
-     * @param $data
-     */
-    private function populateAndPersist($object, $data)
-    {
-        $this->populateObject($object, $data);
-
         $entityManager = $this->getManager();
         $entityManager->persist($object);
         $entityManager->flush();
@@ -183,5 +167,16 @@ class DoctrineOrmSource implements DataSourceInterface
     public function getDriver()
     {
         return $this->getManager();
+    }
+
+    /**
+     * @param $data
+     * @return object
+     */
+    private function populate($data)
+    {
+        $object = $this->getManager()->getUnitOfWork()->createEntity($this->resource, $data);
+        $this->getManager()->detach($object);
+        return $object;
     }
 }
