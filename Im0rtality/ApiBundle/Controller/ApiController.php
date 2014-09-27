@@ -35,14 +35,15 @@ class ApiController extends Controller implements ApiControllerInterface
             )
         );
 
-        /** @var RequestValidator $requestValidator */
-        $requestValidator = $this->container->get('im0rtality_api.api.security.request_validator');
-        $requestValidator->validate($resource, $action->getName(), $payload, $roles);
-
         /** @var DataSourceFactory $factory */
         $factory = $this->container->get('im0rtality_api.data_source.factory');
 
         $roles = $this->handleObjectOwnership($resource, $identifier, $factory, $token, $roles);
+
+        /** @var RequestValidator $requestValidator */
+        $requestValidator = $this->container->get('im0rtality_api.api.security.request_validator');
+        $requestValidator->validate($resource, $action->getName(), $payload, $roles);
+
         $result = $this->execute($request, $resource, $action, $identifier, $factory);
 
         /** @var ResponseFilter $responseFilter */
@@ -106,7 +107,7 @@ class ApiController extends Controller implements ApiControllerInterface
      */
     private function handleObjectOwnership($resource, $identifier, $factory, $token, $roles)
     {
-        if ($identifier) {
+        if ($identifier && is_object($token->getUser())) {
             /** @var OwnershipResolver $ownershipResolver */
             $ownershipResolver = $this->container->get('im0rtality_api.api.security.ownership_resolver');
 
